@@ -1,14 +1,13 @@
 import { useContext, useEffect } from "react";
 import WalletContext from "../../contexts/WalletContext";
 import { useHistory } from "react-router-dom";
-import { Container } from "react-bootstrap";
-import CompanyContext from "../../contexts/CompanyContext";
+import { Container, Toast } from "react-bootstrap";
 import UserContext from "../../contexts/UserContext";
+import UserForm from "../../components/UserForm.js";
 
 const HomePage = () => {
   const { loading, currentAccount } = useContext(WalletContext);
-  const { registerCompany } = useContext(CompanyContext);
-  const { user } = useContext(UserContext);
+  const { onboardingStep } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -17,12 +16,6 @@ const HomePage = () => {
       history.replace("/home");
     }
   }, [currentAccount, history, loading]);
-
-  useEffect(() => {
-    if (user && !user?.company_id) {
-      registerCompany({ name: "Hello" });
-    }
-  }, [user]);
 
   return (
     <Container
@@ -34,7 +27,7 @@ const HomePage = () => {
         display: "flex",
       }}
     >
-      <h1>Home</h1>
+      <UserForm />
     </Container>
   );
 };

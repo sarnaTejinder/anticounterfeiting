@@ -52,15 +52,15 @@ export function CompanyProvider({ children }) {
   };
 
   useEffect(() => {
-    getCompany();
+    // getCompany();
   }, [user, getCompany]);
 
   useEffect(() => {
     let unsubscribe;
     if (company?.id) {
-      unsubscribe = onSnapshot(doc(companyRef, company?.id), (doc) => {
-        setCompany(doc.data());
-      });
+      // unsubscribe = onSnapshot(doc(companyRef, company?.id), (doc) => {
+      //   setCompany(doc.data());
+      // });
     }
 
     return () => {

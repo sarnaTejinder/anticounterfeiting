@@ -1,4 +1,4 @@
-import "./App.css";
+import "./App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { WalletProvider } from "./contexts/WalletContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";

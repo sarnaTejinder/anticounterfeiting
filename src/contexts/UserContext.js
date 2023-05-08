@@ -64,16 +64,16 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     if (currentAccount) {
-      registerUser();
+      // registerUser();
     }
   }, [currentAccount, registerUser]);
 
   useEffect(() => {
     let unsubscribe;
     if (currentAccount) {
-      unsubscribe = onSnapshot(doc(usersRef, currentAccount), (doc) => {
-        setUser(doc.data());
-      });
+      // unsubscribe = onSnapshot(doc(usersRef, currentAccount), (doc) => {
+      //   setUser(doc.data());
+      // });
     }
 
     return () => {
@@ -81,7 +81,7 @@ export function UserProvider({ children }) {
         unsubscribe();
       }
     };
-  }, [user]);
+  }, [currentAccount]);
 
   const hasCompanyAssigned = useMemo(() => {
     return user && user?.company_id;
@@ -95,6 +95,12 @@ export function UserProvider({ children }) {
     return null;
   }, [user]);
 
+  const updateData = async (data) => {
+    setSaving(true);
+    await setDoc(doc(usersRef, currentAccount), data, { merge: true });
+    setSaving(false);
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -104,6 +110,7 @@ export function UserProvider({ children }) {
         addCompany,
         hasCompanyAssigned,
         onboardingStep,
+        updateData,
       }}
     >
       {children}
