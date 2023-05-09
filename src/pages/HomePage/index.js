@@ -1,34 +1,51 @@
 import { useContext, useEffect } from "react";
 import WalletContext from "../../contexts/WalletContext";
 import { useHistory } from "react-router-dom";
-import { Container, Toast } from "react-bootstrap";
-import UserContext from "../../contexts/UserContext";
-import UserForm from "../../components/UserForm.js";
+import { UserProvider } from "../../contexts/UserContext";
+import { CompanyProvider } from "../../contexts/CompanyContext";
+import { TeamMembersProvider } from "../../contexts/TeamMembersContext";
+import { ProductCatalogueProvider } from "../../contexts/ProductCatalogueContext";
+import { SellersProvider } from "../../contexts/SellersContext";
+import { InventoryProvider } from "../../contexts/InventoryContext";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import OnboardingPage from "../OnboardingPage";
+import ConsolePage from "../ConsolePage";
+import PageNotFound from "../PageNotFound";
 
 const HomePage = () => {
   const { loading, currentAccount } = useContext(WalletContext);
-  const { onboardingStep } = useContext(UserContext);
 
   const history = useHistory();
 
   useEffect(() => {
     if (!currentAccount && loading === false) {
-      history.replace("/home");
+      history.replace("/");
     }
   }, [currentAccount, history, loading]);
 
   return (
-    <Container
-      style={{
-        width: "100vw",
-        height: "100vh",
-        justifyContent: "center",
-        alignItems: "center",
-        display: "flex",
-      }}
-    >
-      <UserForm />
-    </Container>
+    <UserProvider>
+      <CompanyProvider>
+        <TeamMembersProvider>
+          <ProductCatalogueProvider>
+            <SellersProvider>
+              <InventoryProvider>
+                <Router>
+                  <Switch>
+                    <Route path="/onboarding" exact>
+                      <OnboardingPage />
+                    </Route>
+                    <Route path="/">
+                      <ConsolePage />
+                    </Route>
+                  </Switch>
+                </Router>
+              </InventoryProvider>
+            </SellersProvider>
+          </ProductCatalogueProvider>
+        </TeamMembersProvider>
+      </CompanyProvider>
+    </UserProvider>
   );
 };
 

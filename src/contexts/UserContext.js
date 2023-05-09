@@ -29,6 +29,11 @@ export function UserProvider({ children }) {
   const registerUser = useCallback(async () => {
     if (currentAccount) {
       setLoading(true);
+      const userSnap = await getDoc(doc(usersRef, currentAccount));
+
+      if (userSnap.exists()) {
+        setUser(userSnap.data());
+      }
 
       await setDoc(
         doc(usersRef, currentAccount),
@@ -39,11 +44,6 @@ export function UserProvider({ children }) {
         { merge: true }
       );
 
-      const userSnap = await getDoc(doc(usersRef, currentAccount));
-
-      if (userSnap.exists()) {
-        setUser(userSnap.data());
-      }
       setLoading(false);
     }
   }, [currentAccount]);
@@ -56,6 +56,7 @@ export function UserProvider({ children }) {
       {
         company_id: companyId,
         user_level: USER_LEVELS.ADMIN,
+        skip_intro: false,
       },
       { merge: true }
     );
@@ -64,16 +65,16 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     if (currentAccount) {
-      // registerUser();
+      registerUser();
     }
   }, [currentAccount, registerUser]);
 
   useEffect(() => {
     let unsubscribe;
     if (currentAccount) {
-      // unsubscribe = onSnapshot(doc(usersRef, currentAccount), (doc) => {
-      //   setUser(doc.data());
-      // });
+      unsubscribe = onSnapshot(doc(usersRef, currentAccount), (doc) => {
+        setUser(doc.data());
+      });
     }
 
     return () => {
@@ -87,9 +88,13 @@ export function UserProvider({ children }) {
     return user && user?.company_id;
   }, [user]);
 
+  const skipIntro = useMemo(() => {
+    return user && user?.skip_intro;
+  }, [user]);
+
   const onboardingStep = useMemo(() => {
     if (user) {
-      if (!user.name) return "user_onboarding";
+      if (!user.first_name) return "user_onboarding";
       if (!user.company_id) return "company_onboarding";
     }
     return null;
@@ -98,7 +103,9 @@ export function UserProvider({ children }) {
   const updateData = async (data) => {
     setSaving(true);
     await setDoc(doc(usersRef, currentAccount), data, { merge: true });
-    setSaving(false);
+    setTimeout(() => {
+      setSaving(false);
+    }, 2000);
   };
 
   return (
@@ -111,6 +118,7 @@ export function UserProvider({ children }) {
         hasCompanyAssigned,
         onboardingStep,
         updateData,
+        skipIntro,
       }}
     >
       {children}

@@ -6,6 +6,7 @@ export default function IconText({
   text,
   left = true,
   active = 0,
+  labelStyle,
   ...props
 }) {
   return (
@@ -22,7 +23,7 @@ export default function IconText({
             {icon}
           </div>
         )}
-        <div>{text}</div>
+        <span style={labelStyle}>{text}</span>
         {!left && (
           <div
             style={{

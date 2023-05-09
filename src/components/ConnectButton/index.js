@@ -56,7 +56,7 @@ export default function ConnectButton() {
   return (
     <Button
       onClick={() => {
-        history.replace("/");
+        history.replace("/dashboard");
       }}
     >
       Go to Console
