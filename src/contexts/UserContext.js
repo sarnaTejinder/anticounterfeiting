@@ -22,7 +22,7 @@ const UserContext = createContext({});
 export function UserProvider({ children }) {
   const { currentAccount } = useContext(WalletContext);
   const [user, setUser] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const usersRef = collection(db, "users");
 
@@ -103,9 +103,17 @@ export function UserProvider({ children }) {
   const updateData = async (data) => {
     setSaving(true);
     await setDoc(doc(usersRef, currentAccount), data, { merge: true });
-    setTimeout(() => {
-      setSaving(false);
-    }, 2000);
+    setSaving(false);
+  };
+
+  const removeIntro = async () => {
+    setSaving(true);
+    await setDoc(
+      doc(usersRef, currentAccount),
+      { skip_intro: true },
+      { merge: true }
+    );
+    setSaving(false);
   };
 
   return (
@@ -119,6 +127,7 @@ export function UserProvider({ children }) {
         onboardingStep,
         updateData,
         skipIntro,
+        removeIntro,
       }}
     >
       {children}

@@ -1,6 +1,7 @@
-import { Card, Col } from "react-bootstrap";
+import { Button, Card, Col } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import WalletContext from "../../../contexts/WalletContext";
 
 export default function SideBar() {
   const navItems = [
@@ -28,11 +29,14 @@ export default function SideBar() {
     },
   ];
 
+  const { currentAccount, disconnectWallet } = useContext(WalletContext);
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <Col
       style={{
         borderRight: "1px solid #ced4da",
-        maxWidth: 250,
+        maxWidth: 220,
         padding: "12px 8px 12px 8px",
         backgroundColor: "white",
         display: "flex",
@@ -42,7 +46,7 @@ export default function SideBar() {
       }}
     >
       <div>
-        <p className="h3 text-center mb-3">Alloy</p>
+        <p className="h3 text-center mb-3">alloy</p>
         <div
           style={{
             paddingTop: 6,
@@ -54,8 +58,39 @@ export default function SideBar() {
           })}
         </div>
       </div>
-      <Card>
-        <Card.Body>Tejinder</Card.Body>
+      <Card
+        onPointerEnter={() => setIsHovered(true)}
+        onPointerLeave={() => setIsHovered(false)}
+      >
+        <Card.Body>
+          {isHovered ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button variant="danger" onClick={disconnectWallet}>
+                Disconnect
+              </Button>
+            </div>
+          ) : (
+            <span
+              style={{
+                fontSize: 12,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {`${currentAccount?.slice(0, 10)}...${currentAccount?.slice(
+                currentAccount?.length - 10,
+                currentAccount?.length
+              )}`}
+            </span>
+          )}
+        </Card.Body>
       </Card>
     </Col>
   );

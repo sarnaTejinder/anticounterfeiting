@@ -1,4 +1,5 @@
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
@@ -21,7 +22,7 @@ const CompanyContext = createContext({});
 export function CompanyProvider({ children }) {
   const { user, addCompany } = useContext(UserContext);
   const [company, setCompany] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const companyRef = collection(db, "companies");
 
@@ -51,6 +52,16 @@ export function CompanyProvider({ children }) {
     setSaving(false);
   };
 
+  const updateCompany = async (data) => {
+    if (!company) return;
+    setSaving(true);
+
+    await setDoc(doc(companyRef, company.id), {
+      ...data,
+    });
+    setSaving(false);
+  };
+
   useEffect(() => {
     getCompany();
   }, [user, getCompany]);
@@ -72,7 +83,7 @@ export function CompanyProvider({ children }) {
 
   return (
     <CompanyContext.Provider
-      value={{ company, loading, saving, registerCompany }}
+      value={{ company, loading, saving, registerCompany, updateCompany }}
     >
       {children}
     </CompanyContext.Provider>

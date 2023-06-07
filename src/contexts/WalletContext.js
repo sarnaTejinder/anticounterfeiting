@@ -93,6 +93,10 @@ export function WalletProvider({ children }) {
     if (ethereum) ethereum.on("accountsChanged", handleChainChanged);
   }, [ethereum]);
 
+  const disconnectWallet = () => {
+    setCurrentAccount(null);
+  };
+
   useEffect(() => {
     connectWallet();
     checkIfWalletIsConnected();
@@ -105,7 +109,7 @@ export function WalletProvider({ children }) {
   }, [
     connectWallet,
     checkIfWalletIsConnected,
-    history,
+    history?.location?.pathname,
     ethereum,
     accountChange,
   ]);
@@ -119,6 +123,7 @@ export function WalletProvider({ children }) {
         loading,
         errorStatus,
         connectWallet: connect,
+        disconnectWallet,
       }}
     >
       {children}

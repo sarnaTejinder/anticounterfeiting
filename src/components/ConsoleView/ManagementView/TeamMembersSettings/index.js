@@ -1,15 +1,13 @@
-import { Button, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { Route, useHistory } from "react-router-dom";
 import { useContext } from "react";
-import InventoryContext from "../../../contexts/InventoryContext";
-import InventoryTable from "./InventoryTable";
-import CreateEditItem from "./CreateEditItem";
-import ItemDetails from "./ItemDetails";
-import palette from "../../../constants/palette";
+import TeamMembersContext from "../../../../contexts/TeamMembersContext";
+import TeamMembersTable from "./TeamMembersTable";
+import CreateEditTeamMember from "./CreateEditTeamMember";
 
-export default function InventoryView() {
+export default function TeamMembersSettings() {
   const history = useHistory();
-  const { loading, selected } = useContext(InventoryContext);
+  const { loading } = useContext(TeamMembersContext);
   return (
     <div
       style={{
@@ -30,10 +28,10 @@ export default function InventoryView() {
           display: "flex",
         }}
       >
-        <h4>Inventory</h4>
+        <h4>Team Members</h4>
         <Button
           onClick={() => {
-            history.replace("/inventory/new");
+            history.replace("/manage/users/new");
           }}
         >
           Add New
@@ -53,24 +51,9 @@ export default function InventoryView() {
           </Spinner>
         </div>
       ) : (
-        <Row style={{ flex: 1 }}>
-          <Col>
-            <InventoryTable />
-          </Col>
-
-          <Col
-            style={{
-              maxWidth: selected?.id ? "30%" : 0,
-              borderLeft: `1px solid ${palette.light_grey}`,
-              overflow: "hidden",
-              transition: "max-width 0.3s",
-            }}
-          >
-            <ItemDetails />
-          </Col>
-        </Row>
+        <TeamMembersTable />
       )}
-      <Route path="/inventory/new" component={CreateEditItem} />
+      <Route path="/manage/users/new" component={CreateEditTeamMember} />
     </div>
   );
 }

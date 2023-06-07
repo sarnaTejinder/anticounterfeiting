@@ -18,12 +18,11 @@ export function TeamMembersProvider({ children }) {
   const { company } = useContext(CompanyContext);
   const { user } = useContext(UserContext);
   const [teamMembers, setTeamMembers] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const usersRef = collection(db, "users");
 
   const getTeamMembers = async () => {
-    if (loading) return;
     setLoading(true);
     const q = query(usersRef, where("company_id", "==", company.id));
     const teamMemberSnap = await getDocs(q);
@@ -48,12 +47,12 @@ export function TeamMembersProvider({ children }) {
   };
 
   useEffect(() => {
-    // if (company && company?.id) getTeamMembers();
+    if (company && company?.id) getTeamMembers();
   }, [company?.id]);
 
   return (
     <TeamMembersContext.Provider
-      value={{ loading, teamMembers, getTeamMembers, addTeamMember }}
+      value={{ loading, teamMembers, getTeamMembers, addTeamMember, saving }}
     >
       {children}
     </TeamMembersContext.Provider>

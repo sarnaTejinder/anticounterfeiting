@@ -11,7 +11,7 @@ export default function IconText({
 }) {
   return (
     <Row className="d-inline-block align-middle" {...props}>
-      <Col className="d-flex gap-2">
+      <Col className={`d-flex ${text ? "gap-2" : ""}`}>
         {left && (
           <div
             style={{
