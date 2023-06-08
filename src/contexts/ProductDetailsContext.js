@@ -1,7 +1,7 @@
 import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
 import { db } from "../firebase.config";
 import ContractContext from "./ContractContext";
-
+import { isMobile } from "react-device-detect";
 const { createContext, useContext, useState, useEffect } = require("react");
 
 const ProductDetailsContext = createContext({});
@@ -24,7 +24,7 @@ export function ProductDetailsProvider({ children }) {
       let catalogData;
       let sellerData;
       const isAddedToBlockchain = await verifyProduct(id);
-      if (isAddedToBlockchain) {
+      if (isAddedToBlockchain || isMobile) {
         const productDoc = doc(productsRef, id);
         const productSnap = await getDoc(productDoc);
         if (productSnap.exists()) {
