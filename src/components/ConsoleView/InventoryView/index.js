@@ -60,7 +60,7 @@ export default function InventoryView() {
 
           <div
             style={{
-              width: selected?.id ? "30%" : 0,
+              width: selected?.id ? "40%" : 0,
               borderLeft: `1px solid ${palette.light_grey}`,
               padding: 0,
               transition: "width 0.3s",
