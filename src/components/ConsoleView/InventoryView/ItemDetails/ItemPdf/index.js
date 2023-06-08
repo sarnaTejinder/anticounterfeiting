@@ -27,7 +27,7 @@ const ItemPdf = ({ value, data }) => {
     family: "Courgette",
     fonts: [
       {
-        src: "http://fonts.gstatic.com/s/courgette/v13/wEO_EBrAnc9BLjLQAUkFUfAL3EsHiA.ttf",
+        src: "https://fonts.gstatic.com/s/courgette/v13/wEO_EBrAnc9BLjLQAUkFUfAL3EsHiA.ttf",
       },
     ],
   });
