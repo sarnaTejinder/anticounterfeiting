@@ -33,7 +33,7 @@ export default function CreateEditItem() {
           borderRadius: "8px 8px 0 0",
         }}
       >
-        <h5>Add New Product Catalog</h5>
+        <h5>Add New Product</h5>
       </Container>
       <Container
         style={{
