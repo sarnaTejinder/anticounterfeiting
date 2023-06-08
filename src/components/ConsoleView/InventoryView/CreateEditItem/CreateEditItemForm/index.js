@@ -7,13 +7,14 @@ import SellersContext from "../../../../../contexts/SellersContext";
 import ContractContext from "../../../../../contexts/ContractContext";
 
 export default function CreateEditItemForm() {
-  const { saving, addProduct, getProducts } = useContext(InventoryContext);
+  const { addProduct, getProducts } = useContext(InventoryContext);
   const { addProduct: addProductToContract } = useContext(ContractContext);
   const { catalogs, loading: loadingCatalogs } = useContext(
     ProductCatalogueContext
   );
   const { sellers, loading: loadingSellers } = useContext(SellersContext);
   const [draft, setDraft] = useState({});
+  const [saving, setSaving] = useState(false);
   const history = useHistory();
 
   const updateDraft = (key) => (value) => {
@@ -118,8 +119,10 @@ export default function CreateEditItemForm() {
               saving
             }
             onClick={async () => {
+              setSaving(true);
               const id = await addProduct(draft);
               await addProductToContract(id);
+              setSaving(false);
               getProducts();
               history.replace("/inventory");
             }}
