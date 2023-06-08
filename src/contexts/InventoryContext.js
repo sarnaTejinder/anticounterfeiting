@@ -48,8 +48,14 @@ export function InventoryProvider({ children }) {
       id: productId,
     });
 
-    await getProducts();
     setSaving(false);
+    return productId;
+  };
+
+  const getNewProductId = () => {
+    const productDoc = doc(productsRef);
+    const productId = productDoc?.id;
+    return productId;
   };
 
   useEffect(() => {
@@ -66,6 +72,7 @@ export function InventoryProvider({ children }) {
         addProduct,
         selected,
         setSelected,
+        getNewProductId,
       }}
     >
       {children}

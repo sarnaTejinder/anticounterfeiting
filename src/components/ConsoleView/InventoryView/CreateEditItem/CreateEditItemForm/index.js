@@ -4,9 +4,11 @@ import { Link, useHistory } from "react-router-dom";
 import InventoryContext from "../../../../../contexts/InventoryContext";
 import ProductCatalogueContext from "../../../../../contexts/ProductCatalogueContext";
 import SellersContext from "../../../../../contexts/SellersContext";
+import ContractContext from "../../../../../contexts/ContractContext";
 
 export default function CreateEditItemForm() {
-  const { saving, addProduct } = useContext(InventoryContext);
+  const { saving, addProduct, getProducts } = useContext(InventoryContext);
+  const { addProduct: addProductToContract } = useContext(ContractContext);
   const { catalogs, loading: loadingCatalogs } = useContext(
     ProductCatalogueContext
   );
@@ -49,7 +51,7 @@ export default function CreateEditItemForm() {
                   updateDraft("type")(e.target.value);
                 }}
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Select Product Type
                 </option>
                 {catalogs.map((catalog) => (
@@ -83,7 +85,7 @@ export default function CreateEditItemForm() {
                   updateDraft("seller")(e.target.value);
                 }}
               >
-                <option value="" disabled selected>
+                <option value="" disabled>
                   Select Seller
                 </option>
                 {sellers.map((seller) => (
@@ -116,7 +118,9 @@ export default function CreateEditItemForm() {
               saving
             }
             onClick={async () => {
-              await addProduct(draft);
+              const id = await addProduct(draft);
+              await addProductToContract(id);
+              getProducts();
               history.replace("/inventory");
             }}
           >

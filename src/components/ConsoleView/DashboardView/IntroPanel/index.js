@@ -1,9 +1,7 @@
-import { useContext } from "react";
 import { Col, Container, Form, Row } from "react-bootstrap";
-import UserContext from "../../../../contexts/UserContext";
+import { Link } from "react-router-dom";
 
 export default function IntroPanel() {
-  const { skipIntro, removeIntro } = useContext(UserContext);
   return (
     <Container
       style={{
@@ -33,16 +31,24 @@ export default function IntroPanel() {
             <span>Quick Links</span>
           </Row>
           <Row className="mb-3">
-            <span className="text-primary">Manage Inventory</span>
+            <Link to="/inventory">
+              <span className="text-primary">Manage Inventory</span>
+            </Link>
           </Row>
           <Row className="mb-3">
-            <span className="text-primary">Add Team Members</span>
+            <Link to="/manage/users">
+              <span className="text-primary">Add Team Members</span>
+            </Link>
           </Row>
           <Row className="mb-3">
-            <span className="text-primary">Add Products to Catalog</span>
+            <Link to="/catalog">
+              <span className="text-primary">Add Products to Catalog</span>
+            </Link>
           </Row>
           <Row className="mb-3">
-            <span className="text-primary">Add Seller(s)</span>
+            <Link to="/manage/sellers">
+              <span className="text-primary">Add Seller(s)</span>
+            </Link>
           </Row>
         </Col>
         <Col>
@@ -50,34 +56,39 @@ export default function IntroPanel() {
             <span>About Us</span>
           </Row>
           <Row className="mb-3">
-            <span className="text-primary">What is Alloy ?</span>
+            <Link
+              to={{
+                hash: "#home",
+              }}
+              target="_blank"
+            >
+              <span className="text-primary">What is Alloy ?</span>
+            </Link>
           </Row>
           <Row className="mb-3">
-            <span className="text-primary">
-              How is Alloy an anti counterfeiting system ?
-            </span>
+            <Link
+              to={{
+                hash: "#about",
+              }}
+              target="_blank"
+            >
+              <span className="text-primary">
+                How is Alloy an anti counterfeiting system ?
+              </span>
+            </Link>
           </Row>
           <Row className="mb-3">
-            <span className="text-primary">
-              How your company can benefit by using Alloy ?
-            </span>
+            <Link
+              to={{
+                hash: "#flow",
+              }}
+              target="_blank"
+            >
+              <span className="text-primary">
+                How your company can benefit by using Alloy ?
+              </span>
+            </Link>
           </Row>
-        </Col>
-      </Row>
-      <Row style={{ flex: 1, display: "flex", alignItems: "end" }}>
-        <Col style={{ display: "flex", justifyContent: "center" }}>
-          <Form>
-            <Form.Group>
-              <Row>
-                <Form.Check
-                  type="checkbox"
-                  label="Show Welcome page on Startup"
-                  checked={!skipIntro}
-                  onChange={removeIntro}
-                />
-              </Row>
-            </Form.Group>
-          </Form>
         </Col>
       </Row>
     </Container>

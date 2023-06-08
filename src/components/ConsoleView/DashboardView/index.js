@@ -8,7 +8,7 @@ export default function DashboardView() {
 
   return (
     <Container fluid style={{ display: "flex", flex: 1, height: "100%" }}>
-      {skipIntro === false ? <IntroPanel /> : <></>}
+      <IntroPanel />
     </Container>
   );
 }

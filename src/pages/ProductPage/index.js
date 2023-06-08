@@ -38,6 +38,7 @@ const ProductDetails = ({ id }) => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
+        flexDirection: "column",
       }}
     >
       {loading ? (
@@ -45,30 +46,77 @@ const ProductDetails = ({ id }) => {
           <span className="visually-hidden">Loading...</span>
         </Spinner>
       ) : (
-        <div>
-          <div className="text-middle">Alloy</div>
-          <div className="text-muted">A secure Anti-Counterfeiting system</div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          <h2
+            style={{
+              fontSize: 24,
+              marginBottom: 12,
+              color: palette.primary,
+            }}
+          >
+            Alloy
+          </h2>
+          <span
+            style={{
+              fontSize: 18,
+              marginBottom: 24,
+              color: palette.label_grey,
+            }}
+          >
+            An Anti-Counterfeiting System!
+          </span>
+          <span
+            style={{
+              fontSize: 18,
+              marginBottom: 12,
+            }}
+          >
+            This product is brought to you by {`${product?.company?.name}`}
+          </span>
+          <span
+            style={{
+              fontSize: 18,
+              marginBottom: 12,
+              color: palette.primary_light,
+            }}
+          >
+            {`${product?.catalog?.name}`}
+          </span>
+          <span
+            style={{
+              fontSize: 18,
+              marginBottom: 12,
+              color: palette.primary_light,
+              opacity: 0.6,
+            }}
+          >
+            {`${product?.catalog?.description}`}
+          </span>
 
-          <Row className="mt-3">
-            <Col>
-              This product is owned by the company {product?.company?.name}.
-            </Col>
-          </Row>
-          <Row className="mt-1">
-            <Col>
-              Product Details: {product?.catalog?.name} -{" "}
-              {product?.catalog?.description}
-            </Col>
-          </Row>
-          <Row className="mt-1">
-            <Col>
-              It is sold by the seller {product?.seller?.name} at{" "}
-              {product?.seller?.address}.
-            </Col>
-          </Row>
-          <Row className="mt-1">
-            <Col>Sellers Wallet: {product?.seller?.wallet_address}</Col>
-          </Row>
+          <span
+            style={{
+              fontSize: 18,
+              marginBottom: 12,
+            }}
+          >
+            Sold by {`${product?.seller?.name}`}
+          </span>
+          <span
+            style={{
+              fontSize: 18,
+              marginBottom: 12,
+            }}
+          >
+            Seller Address: {`${product?.seller?.address}`}
+          </span>
+          <span
+            style={{
+              fontSize: 18,
+              marginBottom: 12,
+            }}
+          >
+            Seller Wallet Address: {`${product?.seller?.wallet_address}`}
+          </span>
         </div>
       )}
     </Container>

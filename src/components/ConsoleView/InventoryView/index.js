@@ -58,16 +58,16 @@ export default function InventoryView() {
             <InventoryTable />
           </Col>
 
-          <Col
+          <div
             style={{
-              maxWidth: selected?.id ? "30%" : 0,
+              width: selected?.id ? "30%" : 0,
               borderLeft: `1px solid ${palette.light_grey}`,
-              overflow: "hidden",
-              transition: "max-width 0.3s",
+              padding: 0,
+              transition: "width 0.3s",
             }}
           >
             <ItemDetails />
-          </Col>
+          </div>
         </Row>
       )}
       <Route path="/inventory/new" component={CreateEditItem} />

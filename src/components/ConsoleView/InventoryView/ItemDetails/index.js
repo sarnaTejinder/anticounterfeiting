@@ -4,13 +4,20 @@ import { Col, Container, Row } from "react-bootstrap";
 import IconButton from "../../../IconButton";
 import { FiX } from "react-icons/fi";
 import { QRCodeSVG } from "qrcode.react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import ItemPdf from "./ItemPdf";
+import CompanyContext from "../../../../contexts/CompanyContext";
 
 export default function ItemDetails() {
   const { selected, setSelected } = useContext(InventoryContext);
+  const { company } = useContext(CompanyContext);
+
+  if (!selected?.id) return null;
+
   return (
     <div
       style={{
-        paddingBottom: 16,
+        padding: 16,
       }}
     >
       <div
@@ -37,7 +44,7 @@ export default function ItemDetails() {
             <span>id</span>
           </Col>
           <Col>
-            <span>{selected?.id}</span>
+            <span>{selected?.internal_id}</span>
           </Col>
         </Row>
         <Row>
@@ -66,6 +73,14 @@ export default function ItemDetails() {
         </Row>
         <Row>
           <Col>
+            <span>Seller Address</span>
+          </Col>
+          <Col>
+            <span>{selected?.extra?.seller?.address}</span>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <span>Seller Wallet Address</span>
           </Col>
           <Col>
@@ -78,6 +93,23 @@ export default function ItemDetails() {
           width="100%"
           className="mt-3"
         />
+        <div
+          className="mt-3"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <PDFDownloadLink
+            document={
+              <ItemPdf
+                value={`${window?.parent?.origin}/product/${selected?.id}`}
+                data={{ ...selected, company }}
+              />
+            }
+            fileName={`${selected?.internal_id}.pdf`}
+            className="btn btn-primary"
+          >
+            Download Pdf
+          </PDFDownloadLink>
+        </div>
       </Container>
     </div>
   );
