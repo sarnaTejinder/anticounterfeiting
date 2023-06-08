@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import InventoryContext from "../../../../contexts/InventoryContext";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import IconButton from "../../../IconButton";
-import { FiX } from "react-icons/fi";
+import { FiLink, FiX } from "react-icons/fi";
 import { QRCodeSVG } from "qrcode.react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import ItemPdf from "./ItemPdf";
 import CompanyContext from "../../../../contexts/CompanyContext";
+import { Link } from "react-router-dom";
 
 export default function ItemDetails() {
   const { selected, setSelected } = useContext(InventoryContext);
@@ -94,21 +95,38 @@ export default function ItemDetails() {
           className="mt-3"
         />
         <div
-          className="mt-3"
-          style={{ display: "flex", justifyContent: "center" }}
+          className="mt-4"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            textAlign: "center",
+          }}
         >
-          <PDFDownloadLink
-            document={
-              <ItemPdf
-                value={`${window?.parent?.origin}/product/${selected?.id}`}
-                data={{ ...selected, company }}
-              />
-            }
-            fileName={`${selected?.internal_id}.pdf`}
-            className="btn btn-primary"
+          <span>
+            <PDFDownloadLink
+              document={
+                <ItemPdf
+                  value={`${window?.parent?.origin}/product/${selected?.id}`}
+                  data={{ ...selected, company }}
+                />
+              }
+              fileName={`${selected?.internal_id}.pdf`}
+              className="btn btn-primary"
+            >
+              Download Pdf
+            </PDFDownloadLink>
+          </span>
+          <Link
+            to={{
+              pathname: `${window?.parent?.origin}/product/${selected?.id}`,
+            }}
+            target="_blank"
+            replace
+            className="mt-2"
           >
-            Download Pdf
-          </PDFDownloadLink>
+            See what your customers see <FiLink />
+          </Link>
         </div>
       </Container>
     </div>
