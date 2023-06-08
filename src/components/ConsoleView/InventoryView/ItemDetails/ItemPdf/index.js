@@ -89,7 +89,7 @@ const ItemPdf = ({ value, data }) => {
           >
             {`${data?.extra?.catalog?.description}`}
           </Text>
-          <Svg style={{ width: 300, height: 300 }} viewBox="0 0 29 29">
+          <Svg style={{ width: 300, height: 300 }} viewBox="0 0 30 30">
             {parsedQrCodeSvg.props.children
               .filter((c) => c.type === "path")
               .map((child, index) => (
