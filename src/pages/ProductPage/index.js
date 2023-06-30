@@ -58,8 +58,8 @@ const ProductDetails = ({ id }) => {
           </h2>
           <span
             style={{
-              fontSize: 18,
-              marginBottom: 24,
+              fontSize: 16,
+              marginBottom: 18,
               color: palette.label_grey,
             }}
           >
@@ -67,7 +67,7 @@ const ProductDetails = ({ id }) => {
           </span>
           <span
             style={{
-              fontSize: 18,
+              fontSize: 16,
               marginBottom: 12,
             }}
           >
@@ -75,7 +75,7 @@ const ProductDetails = ({ id }) => {
           </span>
           <span
             style={{
-              fontSize: 18,
+              fontSize: 16,
               marginBottom: 12,
               color: palette.primary_light,
             }}
@@ -84,7 +84,7 @@ const ProductDetails = ({ id }) => {
           </span>
           <span
             style={{
-              fontSize: 18,
+              fontSize: 16,
               marginBottom: 12,
               color: palette.primary_light,
               opacity: 0.6,
@@ -95,7 +95,7 @@ const ProductDetails = ({ id }) => {
 
           <span
             style={{
-              fontSize: 18,
+              fontSize: 16,
               marginBottom: 12,
             }}
           >
@@ -103,7 +103,7 @@ const ProductDetails = ({ id }) => {
           </span>
           <span
             style={{
-              fontSize: 18,
+              fontSize: 16,
               marginBottom: 12,
             }}
           >
@@ -111,7 +111,7 @@ const ProductDetails = ({ id }) => {
           </span>
           <span
             style={{
-              fontSize: 18,
+              fontSize: 16,
               marginBottom: 12,
             }}
           >
