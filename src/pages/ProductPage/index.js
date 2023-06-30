@@ -37,7 +37,8 @@ const ProductDetails = ({ id }) => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "100%",
+        width: "100%",
         flexDirection: "column",
       }}
     >
